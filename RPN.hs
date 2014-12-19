@@ -36,8 +36,9 @@ evalRpnProg p = go [] p
     op2f Mult  = (*)
     op2f Div   = div
 
+bind :: Maybe a -> (a -> Maybe b) -> Maybe b
+bind (Just x) f = f x
+bind Nothing  _ = Nothing
 
 main :: IO ()
-main = putStrLn $ show $ case parseRpnProg "1 2 + 3 4 * +" of
-  Just p  -> evalRpnProg p
-  Nothing -> Nothing
+main = putStrLn $ show $ parseRpnProg "1 2 + 3 4 * +" `bind` evalRpnProg
