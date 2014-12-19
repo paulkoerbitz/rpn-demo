@@ -26,13 +26,15 @@ evalRpnProg :: RPNProg -> Maybe Int
 evalRpnProg p = go [] p
   where
     go stk       (Num i   :ps) = go (i:stk)   ps
-    go (i:j:stk) (Op Plus :ps) = go ((i+j):stk) ps
-    go (i:j:stk) (Op Minus:ps) = go ((i-j):stk) ps
-    go (i:j:stk) (Op Mult :ps) = go ((i*j):stk) ps
-    go (i:j:stk) (Op Div  :ps) = go ((i `div` j):stk) ps
+    go (i:j:stk) (Op op   :ps) = go (op2f op i j:stk) ps
     go _         ((Op _)  :_)  = Nothing
-    go (s:_)   []              = Just s
+    go (s:_)     []            = Just s
     go []        []            = Nothing
+
+    op2f Plus  = (+)
+    op2f Minus = (-)
+    op2f Mult  = (*)
+    op2f Div   = div
 
 
 main :: IO ()
