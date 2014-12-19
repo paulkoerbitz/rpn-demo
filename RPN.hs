@@ -38,4 +38,6 @@ evalRpnProg p = go [] p
 
 
 main :: IO ()
-main = putStrLn $ show $ parseRpnProg "1 2 + 3 4 + +"
+main = putStrLn $ show $ case parseRpnProg "1 2 + 3 4 * +" of
+  Just p  -> evalRpnProg p
+  Nothing -> Nothing
