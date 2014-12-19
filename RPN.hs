@@ -22,5 +22,18 @@ parseRpnProg s = go [] s
                            _            -> Nothing
     go stk []       = Just $ reverse stk
 
+evalRpnProg :: RPNProg -> Maybe Int
+evalRpnProg p = go [] p
+  where
+    go stk       (Num i   :ps) = go (i:stk)   ps
+    go (i:j:stk) (Op Plus :ps) = go ((i+j):stk) ps
+    go (i:j:stk) (Op Minus:ps) = go ((i-j):stk) ps
+    go (i:j:stk) (Op Mult :ps) = go ((i*j):stk) ps
+    go (i:j:stk) (Op Div  :ps) = go ((i `div` j):stk) ps
+    go _         ((Op _)  :_)  = Nothing
+    go (s:_)   []              = Just s
+    go []        []            = Nothing
+
+
 main :: IO ()
 main = putStrLn $ show $ parseRpnProg "1 2 + 3 4 + +"
