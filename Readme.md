@@ -20,3 +20,6 @@ while implementing a RPN parser and evaluator.
 
 - All the usual claims
   * Terse, expressive, better programmer productivity, yada yada yada
+
+
+Also: [Why Functional Programming Matters](http://www.cse.chalmers.se/~rjmh/Papers/whyfp.html)
